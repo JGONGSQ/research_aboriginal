@@ -16,7 +16,12 @@ class DataProcessor(object):
     #     print(123)
 
     def read_csv(self, filepath):
-
+        """
+            read the csv file from the path
+        :param filepath: the name of the input file with its path
+        :return: List data
+        """
+        # initial the data list
         data = list()
 
         with open(filepath, 'rU') as csvfile:
@@ -46,11 +51,12 @@ class DataProcessor(object):
 
         return
 
-    def modify_the_data(self, input_filepath, output_filepath):
-        print(123)
+    def modify_the_data(self, input_filepath=filtered_data_filepath, output_filepath=processed_data_filepath):
+        data = self.read_csv(input_filepath)
+        for line in data:
+            print(line)
+
         return
-
-
 
 
 
