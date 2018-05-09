@@ -13,10 +13,7 @@ class DataProcessor(object):
     processed_data_filepath = PROCESSED_DATA_FILE_CSV
 
     def __init__(self):
-        self.gender_dict = {
-            '1': "Male",
-            '2': "Female"
-        }
+        self.gender_dict = GENDER_DICT
 
     def read_csv(self, filepath):
         """
@@ -54,6 +51,33 @@ class DataProcessor(object):
 
         return
 
+    def data_converter(self, variable, element_value):
+        new_value = None
+        if variable == "GENDER":
+            new_value = self.gender_dict[element_value]
+
+        return new_value
+
+    def update_row(self, title_list, row, variables=MODIFIED_VARIABLES):
+
+        for variable in variables:
+            element_index = title_list.index(variable)
+            element_value = row[element_index]
+            new_element_value = self.data_converter(variable, element_value)
+            row[element_index] = new_element_value
+
+        # indexes = list(map(title_list.index, variables))
+        # print("This is indexes", indexes)
+        # map(row.__setitem__, indexes,
+        #     list(
+        #         map(
+        #             self.data_converter, variables, list(map(row.__getitem__, indexes))
+        #         )
+        #     )
+        # )
+
+        return row
+
     def modify_the_data(self, input_filepath=filtered_data_filepath, output_filepath=processed_data_filepath):
         """
             modify the data according to the requirements
@@ -79,21 +103,7 @@ class DataProcessor(object):
         self.write_csv(output_filepath, output_data)
         return
 
-    def update_row(self, title_list, row, vaiables=MODIFIED_VARIABLES):
 
-        for variable in vaiables:
-            element_index = title_list.index(variable)
-            element_value = row[element_index]
-            new_element_value = self.data_converter(variable, element_value)
-            row[element_index] = new_element_value
-        return row
-
-    def data_converter(self, variable, element_value):
-        new_value = None
-        if variable == "GENDER":
-            new_value = self.gender_dict[element_value]
-
-        return new_value
 
 
 

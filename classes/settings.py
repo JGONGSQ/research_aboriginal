@@ -5,3 +5,8 @@ FILTERED_DATA_FILE_CSV = "../resources/2012/IVS_2012_filtered.csv"
 PROCESSED_DATA_FILE_CSV = "../resources/2012/IVS_2012_PROCESSED.csv"
 
 MODIFIED_VARIABLES = ["GENDER"]
+
+GENDER_DICT = {
+    '1': "Male",
+    '2': "Female"
+}
