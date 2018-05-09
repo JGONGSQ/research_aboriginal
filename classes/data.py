@@ -14,6 +14,7 @@ class DataProcessor(object):
 
     def __init__(self):
         self.gender_dict = GENDER_DICT
+        self.agegroup_dict = AGEGROUP_DICT
 
     def read_csv(self, filepath):
         """
@@ -55,6 +56,9 @@ class DataProcessor(object):
         new_value = None
         if variable == "GENDER":
             new_value = self.gender_dict[element_value]
+
+        if variable == "AGEGROUP":
+            new_value = self.agegroup_dict[element_value]
 
         return new_value
 
