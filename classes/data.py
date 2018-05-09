@@ -12,8 +12,11 @@ class DataProcessor(object):
     filtered_data_filepath = FILTERED_DATA_FILE_CSV
     processed_data_filepath = PROCESSED_DATA_FILE_CSV
 
-    # def __init__(self):
-    #     print(123)
+    def __init__(self):
+        self.gender_dict = {
+            '1': "Male",
+            '2': "Female"
+        }
 
     def read_csv(self, filepath):
         """
@@ -37,7 +40,7 @@ class DataProcessor(object):
             Write the results list to generate a new data file
         :param filename: the name of the output file with its path
         :param data: its a two-dimensional array
-        :return: True if success
+        :return: Nothing
         """
 
         # open the file need to be write
@@ -52,11 +55,45 @@ class DataProcessor(object):
         return
 
     def modify_the_data(self, input_filepath=filtered_data_filepath, output_filepath=processed_data_filepath):
-        data = self.read_csv(input_filepath)
-        for line in data:
-            print(line)
+        """
+            modify the data according to the requirements
+        :param input_filepath: the name of input file with its path
+        :param output_filepath: the name of output file with its path
+        :return: Nothing
+        """
+        output_data = list()
+        title_list = None
 
+        data = self.read_csv(input_filepath)
+        for i, row in enumerate(data):
+            # print(i, line)
+            if i == 0:
+                # get the header
+                title_list = row
+                output_data.append(title_list)
+            else:
+                # get and update the content
+                row = self.update_row(title_list, row)
+                output_data.append(row)
+
+        self.write_csv(output_filepath, output_data)
         return
+
+    def update_row(self, title_list, row, vaiables=MODIFIED_VARIABLES):
+
+        for variable in vaiables:
+            element_index = title_list.index(variable)
+            element_value = row[element_index]
+            new_element_value = self.data_converter(variable, element_value)
+            row[element_index] = new_element_value
+        return row
+
+    def data_converter(self, variable, element_value):
+        new_value = None
+        if variable == "GENDER":
+            new_value = self.gender_dict[element_value]
+
+        return new_value
 
 
 
