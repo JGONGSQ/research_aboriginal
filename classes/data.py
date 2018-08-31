@@ -10,11 +10,18 @@ import csv
 class DataProcessor(object):
 
     filtered_data_filepath = FILTERED_DATA_FILE_CSV
-    processed_data_filepath = PROCESSED_DATA_FILE_CSV
+    processed_data_filepath = FILTERED_PROCESSED_DATA_FILE_CSV
 
     def __init__(self):
         self.gender_dict = GENDER_DICT
         self.agegroup_dict = AGEGROUP_DICT
+        self.marital_dict = MARITAL_DICT
+        self.purpose_dict = PURPOSE_DICT
+        self.boolean_dict = BOOLEAN_DICT
+        self.customs_dict = CUSTOMS_DICT
+        self.country_dict = COUNTRY_DICT
+        self.airline_dict = AIRLINE_DICT
+        self.region_dict = REGION_DICT
 
     def read_csv(self, filepath):
         """
@@ -49,16 +56,66 @@ class DataProcessor(object):
             # write each row
             for row in data:
                 writer.writerow(row)
-
         return
 
     def data_converter(self, variable, element_value):
         new_value = None
-        if variable == "GENDER":
-            new_value = self.gender_dict[element_value]
+        if variable == GENDER_STR:
+            try:
+                new_value = self.gender_dict[element_value]
+            except Exception:
+                new_value = 'Other'
 
-        if variable == "AGEGROUP":
-            new_value = self.agegroup_dict[element_value]
+        if variable == AGEGROUP_STR:
+            try:
+                new_value = self.agegroup_dict[element_value]
+            except Exception:
+                new_value = 'Other'
+
+        if variable == MARITAL_STR:
+            try:
+                new_value = self.marital_dict[element_value]
+            except Exception:
+                new_value = 'Other'
+
+        if variable == PURPOSE_STR:
+            try:
+                new_value = self.purpose_dict[element_value]
+            except Exception:
+                new_value = 'Other'
+
+        if variable in [INT_BOOKING_STR, PARENT_STR, PACKAGE_STR]:
+            try:
+                new_value = self.boolean_dict[element_value]
+            except Exception:
+                new_value = 'Other'
+
+        if variable == CUSTOMS_STR:
+            try:
+                new_value = self.customs_dict[element_value]
+            except Exception:
+                new_value = 'Other'
+
+        if variable == COUNTRY_STR:
+            try:
+                new_value = self.country_dict[element_value]
+            except Exception:
+                new_value = 'Other'
+
+        if variable == AIRLINE_STR:
+            try:
+                new_value = self.airline_dict[element_value]
+            except Exception:
+                new_value = 'Other'
+
+        if variable in [REGION1_STR, REGION2_STR, REGION3_STR, REGION4_STR, REGION5_STR]:
+            try:
+                new_value = self.region_dict[element_value]
+            except Exception:
+                if element_value == "NA":
+                    new_value = element_value
+                else:
+                    new_value = 'Other'
 
         return new_value
 
@@ -69,16 +126,6 @@ class DataProcessor(object):
             element_value = row[element_index]
             new_element_value = self.data_converter(variable, element_value)
             row[element_index] = new_element_value
-
-        # indexes = list(map(title_list.index, variables))
-        # print("This is indexes", indexes)
-        # map(row.__setitem__, indexes,
-        #     list(
-        #         map(
-        #             self.data_converter, variables, list(map(row.__getitem__, indexes))
-        #         )
-        #     )
-        # )
 
         return row
 
