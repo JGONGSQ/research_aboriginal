@@ -361,11 +361,21 @@ class DataProcessor(object):
                 utility_data = map(row.__getitem__, map(input_fields_list.index, utility_parameters))
                 if not any(item in [' ', 'NA'] for item in utility_data):
                     print("This is the utility data",  list(utility_data))
+                #
+                compulsory_data = list(map(row.__getitem__, map(input_fields_list.index, compulsory_fields)))
+
+                #
                 destination_data = self.get_the_destination_data(input_fields_list, row, alternatives_code)
+
+                #
                 utility_parameters_data = self.get_utility_parameters_value(input_fields_list, utility_parameters, row)
 
+                #
                 indigenous_activity_choice = self.get_the_activity_choice(input_fields_list, row)
+
                 print("##########################", destination_data, utility_parameters_data, indigenous_activity_choice)
+                data_set = compulsory_data + destination_data + utility_parameters_data + indigenous_activity_choice
+                output_data.append(data_set)
 
         # write the data to the csv file
         self.write_csv(output_filepath, data=output_data)
