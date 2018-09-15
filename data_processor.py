@@ -2,7 +2,7 @@ import sys
 from datetime import datetime
 sys.path.append('..')
 
-from classes.settings import DEFAULT_DATA_FILE_CSV, ALL_PROCESSED_DATA_FILE_CSV
+from settings import DEFAULT_DATA_FILE_CSV, ALL_PROCESSED_DATA_FILE_CSV
 from classes.data import DataProcessor
 
 if __name__ == '__main__':
