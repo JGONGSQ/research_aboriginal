@@ -177,6 +177,9 @@ class DataProcessor(object):
         elif variable == 'CUSTOMS':
             variable_list = CUSTOMS_LIST
 
+        elif variable == 'COUNTRY':
+            variable_list = COUNTRY_LIST
+
         else:
             variable_list = [variable]
 
@@ -224,6 +227,9 @@ class DataProcessor(object):
         elif variable == 'CUSTOMS':
             variable_codes = CUSTOMS_CODE
 
+        elif variable == 'COUNTRY':
+            variable_codes = COUNTRY_CODE
+
         return variable_codes
 
     def find_index_in_list(self, list, value):
@@ -244,9 +250,13 @@ class DataProcessor(object):
         """
         variable_data = [0] * variable_codes.__len__()
         value = row.__getitem__(input_field_list.index(variable))
-        # print("### This is the value in the line:", value, variable)
+        print("### This is the value in the line:", value, variable)
         if value:
-            variable_data.__setitem__(self.find_index_in_list(list=variable_codes, value=value), 1)
+            try:
+                variable_data.__setitem__(self.find_index_in_list(list=variable_codes, value=value), 1)
+            except Exception:
+                if variable == COUNTRY_STR:
+                    variable_data[-1] = 1
 
         return variable_data
 

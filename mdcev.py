@@ -7,12 +7,14 @@ import sys
 
 # local package defaults
 from classes.data import DataProcessor
-from settings import DEFAULT_DATA_FILE_CSV, MDCEV_PROCESSED_DATA_FILE_CSV
+from settings import DEFAULT_DATA_FILE_CSV, MDCEV_PROCESSED_DATA_FILE_CSV, \
+    GENDER_STR, AGEGROUP_STR, PARTYPE_STR, PURPOSE_STR, COUNTRY_STR
 
 
 class ModelRun(object):
 
-    utility_parameters = ['GENDER']
+    utility_parameters = ['AUSNITES', 'NUMVISIT', 'RANDOMSTOP', GENDER_STR,
+                          AGEGROUP_STR, PARTYPE_STR, PURPOSE_STR, COUNTRY_STR]
 
     def __init__(self):
         self.data_processor = DataProcessor()
