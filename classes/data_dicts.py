@@ -93,3 +93,12 @@ REGION_DICT = {
     '510': "Perth",
     '710': "Darwin"
 }
+
+PARTYPE_DICT = {
+    '1': "SingleTraveller",
+    '2': "AdultCouple",
+    '3': "FamilyGroup",
+    '4': "FriendsAndRelatives",
+    "5": "BusinessAssociated",
+    "6": "SchoolTour"
+}

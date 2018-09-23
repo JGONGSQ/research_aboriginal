@@ -22,6 +22,7 @@ class DataProcessor(object):
         self.country_dict = COUNTRY_DICT
         self.airline_dict = AIRLINE_DICT
         self.region_dict = REGION_DICT
+        self.partype_dict = PARTYPE_DICT
 
     def read_csv(self, filepath):
         """
@@ -116,6 +117,12 @@ class DataProcessor(object):
                     new_value = element_value
                 else:
                     new_value = 'Other'
+
+        if variable == PARTYPE_STR:
+            try:
+                new_value = self.partype_dict[element_value]
+            except Exception:
+                new_value = 'Other'
 
         return new_value
 
@@ -237,7 +244,7 @@ class DataProcessor(object):
         """
         variable_data = [0] * variable_codes.__len__()
         value = row.__getitem__(input_field_list.index(variable))
-        print("### This is the value in the line:", value, variable)
+        # print("### This is the value in the line:", value, variable)
         if value:
             variable_data.__setitem__(self.find_index_in_list(list=variable_codes, value=value), 1)
 

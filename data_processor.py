@@ -17,9 +17,11 @@ if __name__ == '__main__':
         arg = 'default'
 
     if arg == 'all':
+        print("processing all data")
         data_processor.modify_the_data(DEFAULT_DATA_FILE_CSV, ALL_PROCESSED_DATA_FILE_CSV)
 
     if arg == 'default':
+        print("processing filtered data")
         data_processor.modify_the_data()
 
     print(datetime.now() - start_time)

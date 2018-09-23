@@ -16,26 +16,31 @@ rm(list=ls())
 # data <- read.table("/Users/daddyspro/Desktop/GitHub/research_aboriginal/resources/2012/IVS_2012_PROCESSED.csv", header = T, sep = ",")
 data <- read.table("/Users/daddyspro/Desktop/GitHub/research_aboriginal/resources/2012/IVS_2012_ALL_PROCESSED.csv", header = T, sep = ",")
 # qplot(data$Duration, geom="histogram", binwidth = 1)
-# NUMSTOP + NUMVISIT
+outfile <- "/Users/daddyspro/Desktop/GitHub/research_aboriginal/results/ivs_negative_binomial.txt"
+# NUMSTOP + NUMVISIT + RANDOMSTOP + PARTYPE
 # estimate the model with Negative Binomial
 # nbm <- glm.nb(AUSNITES ~ GENDER + MARITAL + AGEGROUP + NUMSTOP +
  #               PARTYPE + TRIP_PURPOSE + CUSTOMS, data=data)
 
-nbm <- glm.nb(AUSNITES ~ GENDER + MARITAL + AGEGROUP + NUMSTOP + TRIP_PURPOSE + CUSTOMS, data=data)
+nbm <- glm.nb(AUSNITES ~ GENDER + MARITAL + AGEGROUP + NUMSTOP + TRIP_PURPOSE + CUSTOMS + COUNTRY, data=data)
 
 summary(nbm)
+
+# sink(outfile,append=FALSE)
+# summary(nbm)
+# sink()
 # simulate the results
 #simulateResults <- rnegbin(fitted(nbm), theta=nbm$theta)
 print(nbm$theta)
-simulateResults <- rnegbin(fitted(nbm), theta=0.5*nbm$theta)
+simulateResults <- rnegbin(fitted(nbm), theta=nbm$theta)
 simulateResults_with_offset <- simulateResults + 1
 # predicte result
 # predictResult <- predict.glm(nbm, newdata = data, type = "response")
 # predictResult <- predict(nbm, newdata = data)
 
 # write the results to the csv file
-outputFile = "/Users/daddyspro/Desktop/master_project/Data/ivs/2012/nb_ivs_coefficients.csv"
-write.csv(summary.glm(nbm)$coefficients, outputFile)
+# outputFile = "/Users/daddyspro/Desktop/GitHub/research_aboriginal/results/nb_ivs_coefficients.csv"
+# write.csv(summary.glm(nbm)$coefficients, outputFile)
 
 # initial the data with data frame
 durationInput <- data.frame(Duration = data$AUSNITES)
