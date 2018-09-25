@@ -59,6 +59,16 @@ class DataProcessor(object):
                 writer.writerow(row)
         return
 
+    def convert_list_to_str(self, input_list):
+        output_string = str()
+
+        for i, item in enumerate(input_list):
+            output_string += item
+            if i != len(input_list) - 1:
+                output_string += ','
+
+        return output_string
+
     def data_converter(self, variable, element_value):
         new_value = None
         if variable == GENDER_STR:
@@ -250,7 +260,7 @@ class DataProcessor(object):
         """
         variable_data = [0] * variable_codes.__len__()
         value = row.__getitem__(input_field_list.index(variable))
-        print("### This is the value in the line:", value, variable)
+        # print("### This is the value in the line:", value, variable)
         if value:
             try:
                 variable_data.__setitem__(self.find_index_in_list(list=variable_codes, value=value), 1)
@@ -349,7 +359,7 @@ class DataProcessor(object):
                               input_filepath, output_filepath, utility_parameters,
                               alternatives_code=DESTINATION_ALTERNATIVES_CODES,
                               alternatives_list=DESTINATION_ALTERNATIVES_LIST,
-                              compulsory_fields=COMPULSORY_FIELDS, number_of_data=400):
+                              compulsory_fields=COMPULSORY_FIELDS, number_of_data=50000):
         """
             modify the data for MDCEV model
         :return: None
