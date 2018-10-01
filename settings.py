@@ -34,27 +34,28 @@ MODIFIED_VARIABLES = [
     REGION1_STR, REGION2_STR, REGION3_STR, REGION4_STR, REGION5_STR
 ]
 
+# DESTINATION_ALTERNATIVES_LIST = [
+#     'SYD',
+#     'MEL',
+#     'BNE',
+#     'ADL',
+#     'PER',
+#     'HBA',
+#     'DRW',
+#     'CAN'
+# ]
+# DESTINATION_ALTERNATIVES_LIST = ['NSW', 'VIC', 'QLD', 'SA', 'WA', 'TAS', 'NT', 'ACT']
 
-DESTINATION_ALTERNATIVES_LIST = [
-    'NSW-SYD', 'NSW-Non-SYD',
-    'VIC-MEL', 'VIC-Non-MEL',
-    'QLD-BNE', 'QLD-Non-BNE',
-    'SA-ADL', 'SA-Non-ADL',
-    'WA-PER', 'WA-Non-PER',
-    'TAS-HBA', 'TAS-Non-HBA',
-    'NT-DRW', 'NT-Non-DRW',
-    'ACT-CAN'
-]
+DESTINATION_ALTERNATIVES_LIST = ['SYD', 'NONSYD', 'MEL', 'NONMEL',
+                                 'BNE', 'NONBNE', 'ADL', 'NONADL',
+                                 'PER', 'NONPER', 'HBA', 'NONHBA',
+                                 'DRW', 'NONDRW', 'CAN']
 
 DESTINATION_ALTERNATIVES_CODES = [
-    '110', '1',
-    '210', '2',
-    '310', '3',
-    '410', '4',
-    '510', '5',
-    '610', '6',
-    '710', '7',
-    '810'
+    '110', '1', '210', '2',
+    '310', '3', '410', '4',
+    '510', '5', '610', '6',
+    '710', '7', '810'
 ]
 
 Activity_WITH_IndCommunity = [

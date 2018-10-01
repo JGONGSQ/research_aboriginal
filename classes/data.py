@@ -60,7 +60,7 @@ class DataProcessor(object):
         return
 
     def convert_list_to_str(self, input_list):
-        output_string = str()
+        output_string = ''
 
         for i, item in enumerate(input_list):
             output_string += item
@@ -370,7 +370,7 @@ class DataProcessor(object):
         index_number = 1
         data_count = 0
 
-        extra_parameters = ['PARTICIPATE_IndActivity']
+        extra_parameters = ['PARTICIPATE_IND']
 
         # need to modify the line
         utility_parameters_list = self.get_utility_parameters_list(utility_parameters)
@@ -387,22 +387,24 @@ class DataProcessor(object):
             else:
                 utility_data = map(row.__getitem__, map(input_fields_list.index, utility_parameters))
                 if not any(item in [' ', 'NA'] for item in utility_data):
-                    print("This is the utility data",  list(utility_data))
+                    print("This is the utility data",  utility_data)
                 #
-                compulsory_data = list(map(row.__getitem__, map(input_fields_list.index, compulsory_fields)))
+                    destination_data = self.get_the_destination_data(input_fields_list, row, alternatives_code)
+
+                    if all(value is 0 for value in destination_data) is False:
+                        #
+                        compulsory_data = list(map(row.__getitem__, map(input_fields_list.index, compulsory_fields)))
+                        compulsory_data[0] = index_number
+
+                        utility_parameters_data = self.get_utility_parameters_value(input_fields_list, utility_parameters, row)
 
                 #
-                destination_data = self.get_the_destination_data(input_fields_list, row, alternatives_code)
+                        indigenous_activity_choice = self.get_the_activity_choice(input_fields_list, row)
 
-                #
-                utility_parameters_data = self.get_utility_parameters_value(input_fields_list, utility_parameters, row)
-
-                #
-                indigenous_activity_choice = self.get_the_activity_choice(input_fields_list, row)
-
-                print("##########################", destination_data, utility_parameters_data, indigenous_activity_choice)
-                data_set = compulsory_data + destination_data + utility_parameters_data + indigenous_activity_choice
-                output_data.append(data_set)
+                        print("##########################", destination_data, utility_parameters_data, indigenous_activity_choice)
+                        data_set = compulsory_data + destination_data + utility_parameters_data + indigenous_activity_choice
+                        output_data.append(data_set)
+                        index_number += 1
 
         # write the data to the csv file
         self.write_csv(output_filepath, data=output_data)

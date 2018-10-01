@@ -1,8 +1,10 @@
 list_of_packages = c("utils","foreign","pastecs","mlogit","graphics","VGAM","ZeligChoice","aod","plotrix", "maxLik", "miscTools")
 
 new_packages <- list_of_packages[!(list_of_packages %in% installed.packages()[,"Package"])]
+rm(list=ls())
 print("-----> Start Loading Packages <-----")
-source("scripts/r/mdcev/mdcev_nooutside.r");
+# source("scripts/r/mdcev/mdcev_nooutside.r");
+source("/Users/daddyspro/Desktop/GitHub/research_aboriginal/scripts/r/mdcev/mdcev_nooutside.r");
 if(length(new_packages) > 0) {
   install.packages(new_packages, repos="http://cran.rstudio.com/")
 }
@@ -14,28 +16,34 @@ if (length(args)==0) {
     stop("At least one argument must be supplied", call.=FALSE)
 }
 
-input_file_path = args[1]
-number_of_alternatives = strtoi(args[2])
-case_config = strtoi(args[3])
-utility_variables = args[4]
-city_variables = args[5]
-output_results_path = args[6]
-alternative_variables_str = args[7]
+# input_file_path = args[1]
+# number_of_alternatives = strtoi(args[2])
+# case_config = strtoi(args[3])
+# utility_variables = args[4]
+# city_variables = args[5]
+# output_results_path = args[6]
+# alternative_variables_str = args[7]
 
+input_file_path = "/Users/daddyspro/Desktop/GitHub/research_aboriginal/resources/2012/IVS_2012_MDCEV_ALL_PROCESSED25_3_Sep.csv"
+number_of_alternatives = 15
+case_config = 4
+# utility_variables = args[4]
+city_variables = "NSW_SYD,NSW_NON_SYD,VIC_MEL,VIC_NON_MEL,QLD_BNE,QLD_NON_BNE,SA_ADL,SA_NON_ADL,WA_PER,WA_NON_PER,TAS_HBA,TAS_NON_HBA,NT_DRW,NT_NON_DRW,ACT_CAN"
+output_results_path = "/Users/daddyspro/Desktop/GitHub/research_aboriginal/results/mdcev/estimation_4_TEMP.txt"
+alternative_variables_str = "GENDER_MALE,GENDER_FEMALE"
 
-alternative_variables <- list();
+# alternative_variables <- list();
 
+# for (i in 1:number_of_alternatives){
+#  if (i == 1){
+#    print("first alternative does not get any variables") # Base alternative
+#  }
+#  else {
+#    alternative_variables[[i]] = list_creator(strsplit(alternative_variables_str, ",") )
+#  }
+#}
 
-for (i in 1:number_of_alternatives){
-  if (i == 1){
-    print("first alternative does not get any variables") # Base alternative
-  }
-  else {
-    alternative_variables[[i]] = list_creator(strsplit(alternative_variables_str, ",") )
-  }
-}
-
-
+alternative_variables_list = list_creator(strsplit(alternative_variables_str, ",") )
 
 print("### This is the number of alternaives", number_of_alternatives)
 
@@ -101,7 +109,7 @@ for (i in 1:nc){
     ivmt[[i]] <- c(""); # Base alternative
   }
   else {
-    ivmt[[i]] <- c("uno", alternative_variables[[i]]);
+    ivmt[[i]] <- c("uno", alternative_variables_list);
   }
 }
 print("This is the ivmt")
