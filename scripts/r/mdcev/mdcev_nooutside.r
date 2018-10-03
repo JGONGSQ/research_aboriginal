@@ -444,10 +444,13 @@ mdcev_nooutgood <- function(Data, arg_inds, arg_vars, def, fp1, ivmts, ivdts, iv
   #print(b)
   
   ptm <- proc.time()
-  temp <- maxLik(lpr,lgd,start=b,method=arg_vars[[4]],fixed=!max_active)
+  print(b)
+  temp <- maxLik(lpr, lgd,start=b, method=arg_vars[[4]],fixed=!max_active)
+  # assign("v",temp, envir = globalenv())
   k <- coef(temp)
-  #print("################ This is first K ")
-  #print(k)
+  print("################ This is first K ")
+  print(temp)
+  print(k)
   #
   if (alp0to1 == 0){
     k[(nvarm+1):(nvarm+nrow(eqmatdel)),] <- 1-exp(k[(nvarm+1):(nvarm+nrow(eqmatdel)),])

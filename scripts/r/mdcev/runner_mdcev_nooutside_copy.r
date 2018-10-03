@@ -1,7 +1,8 @@
+rm(list=ls())
 list_of_packages = c("utils","foreign","pastecs","mlogit","graphics","VGAM","ZeligChoice","aod","plotrix", "maxLik", "miscTools")
 
 new_packages <- list_of_packages[!(list_of_packages %in% installed.packages()[,"Package"])]
-rm(list=ls())
+
 print("-----> Start Loading Packages <-----")
 # source("scripts/r/mdcev/mdcev_nooutside.r");
 source("/Users/daddyspro/Desktop/GitHub/research_aboriginal/scripts/r/mdcev/mdcev_nooutside.r");
@@ -12,9 +13,9 @@ if(length(new_packages) > 0) {
 args <- commandArgs(trailingOnly = TRUE)
 
 
-if (length(args)==0) {
-    stop("At least one argument must be supplied", call.=FALSE)
-}
+# if (length(args)==0) {
+#    stop("At least one argument must be supplied", call.=FALSE)
+# }
 
 # input_file_path = args[1]
 # number_of_alternatives = strtoi(args[2])
@@ -24,13 +25,15 @@ if (length(args)==0) {
 # output_results_path = args[6]
 # alternative_variables_str = args[7]
 
-input_file_path = "/Users/daddyspro/Desktop/GitHub/research_aboriginal/resources/2012/IVS_2012_MDCEV_ALL_PROCESSED25_3_Sep.csv"
-number_of_alternatives = 15
+input_file_path = "/Users/daddyspro/Desktop/GitHub/research_aboriginal/resources/2012/IVS_2012_MDCEV_ALL_PROCESSED.csv"
+# input_file_path = "/Users/daddyspro/Desktop/master_project/Data/ivs/filted_data.csv"
+number_of_alternatives = 8
 case_config = 4
 # utility_variables = args[4]
-city_variables = "NSW_SYD,NSW_NON_SYD,VIC_MEL,VIC_NON_MEL,QLD_BNE,QLD_NON_BNE,SA_ADL,SA_NON_ADL,WA_PER,WA_NON_PER,TAS_HBA,TAS_NON_HBA,NT_DRW,NT_NON_DRW,ACT_CAN"
+# city_variables = "SYD,NONSYD,MEL,NONMEL,BNE,NONBNE,ADL,NONADL,PER,NONPER,HBA,NONHBA,DRW,NONDRW,CAN"
+city_variables = "SYD,MEL,BNE,ADL,PER,HBA,DRW,CAN"
 output_results_path = "/Users/daddyspro/Desktop/GitHub/research_aboriginal/results/mdcev/estimation_4_TEMP.txt"
-alternative_variables_str = "GENDER_MALE,GENDER_FEMALE"
+alternative_variables_str = "AGEGROUP_30_39,PARTYPE_ADULT_COUPLE"
 
 # alternative_variables <- list();
 
@@ -45,12 +48,12 @@ alternative_variables_str = "GENDER_MALE,GENDER_FEMALE"
 
 alternative_variables_list = list_creator(strsplit(alternative_variables_str, ",") )
 
-print("### This is the number of alternaives", number_of_alternatives)
+# print("### This is the number of alternaives", number_of_alternatives)
 
-print("### This is the case config")
-print(case_config)
+# print("### This is the case config")
+# print(case_config)
 
-print("###### This is the utility variables")
+# print("###### This is the utility variables")
 # variable_list = list_creator(strsplit(utility_variables, ",") )
 # print(variable_list)
 
@@ -58,7 +61,8 @@ print("### This is the city variables")
 print(city_variables)
 
 print("-----> Reading Table <-----")
-Data <<- read.table(input_file_path, header=T, sep=",");
+Data <<- read.csv(input_file_path, header=T, sep=",");
+# Data2 <<- read.table(input_file_path, header=T, sep=",");
 
 table_headers = names(Data)
 
@@ -67,8 +71,8 @@ alp0to1 <- 1;    # 1 if you want the Alpha values to be constrained between 0 an
                  # putting _alp0to1 = 1 is recommended practice and can provide estimation stability
 price <- 0;      # 1 if there is price variation across goods, 0 otherwise
 nc <- number_of_alternatives;         # Number of alternatives (in the universal choice set) including outside goods
-# po <- match("id", table_headers, 0);         # Index number of ID column in input data
-po <- 1;
+po <- match("id", table_headers, 0);         # Index number of ID column in input data
+# po <- 1;
 
 ivuno <- "uno"
 ivsero <-"sero"
@@ -94,26 +98,26 @@ fp <- fp_list
 # Add a row for ivm4 below if there is a 4th alternative, another addiitonal row for ivm5 if there is a 5th alternative, ...  
 # (number of rows = number of alternatives);
 # Number of columns = Number of variables including alternative specific constants; consider first alternative as base
-ivmt <- list();
-# ivmt[[1]] <- c("");   # Base alternative
-# ivmt[[2]] <- c("uno", alternative_variable_2);
-# ivmt[[3]] <- c("uno", alternative_variable_3);
-# ivmt[[4]] <- c("uno", alternative_variable_4);
-# ivmt[[5]] <- c("uno", alternative_variable_5);
-# ivmt[[6]] <- c("uno", alternative_variable_6);
-# ivmt[[7]] <- c("uno", alternative_variable_7);
-# ivmt[[8]] <- c("uno", alternative_variable_8);
+ivmts <- list();
+ivmts[[1]] <- c("");   # Base alternative
+ivmts[[2]] <- c("uno", list_creator(strsplit(alternative_variables_str, ",")));
+ivmts[[3]] <- c("uno", list_creator(strsplit(alternative_variables_str, ",")));
+ivmts[[4]] <- c("uno", list_creator(strsplit(alternative_variables_str, ",")));
+ivmts[[5]] <- c("uno", list_creator(strsplit(alternative_variables_str, ",")));
+ivmts[[6]] <- c("uno", list_creator(strsplit(alternative_variables_str, ",")));
+ivmts[[7]] <- c("uno", list_creator(strsplit(alternative_variables_str, ",")));
+ivmts[[8]] <- c("uno", list_creator(strsplit(alternative_variables_str, ",")));
 
-for (i in 1:nc){
-  if (i == 1){
-    ivmt[[i]] <- c(""); # Base alternative
-  }
-  else {
-    ivmt[[i]] <- c("uno", alternative_variables_list);
-  }
-}
+#for (i in 1:nc){
+#  if (i == 1){
+#    ivmt[[i]] <- c(""); # Base alternative
+#  }
+#  else {
+#    ivmt[[i]] <- c("uno", alternative_variables_list);
+#  }
+#}
 print("This is the ivmt")
-print(ivmt)
+print(length(ivmts[[1]]))
 
 # In the following specification, ivdts[[1]], ivdts[[2]], ivdts[[3]] contain input data specifications (on right hand side) for satiation parameters (Alphas) 
 # for alternatives 1, 2, and 3;
@@ -179,11 +183,10 @@ arg_inds <- list(config, alp0to1, price, nc, po);
 arg_vars <- list(ivuno, ivsero, wtind, maxlikmethod1, maxlikmethod2);           
 
 
-result <- mdcev_nooutgood(Data, arg_inds, arg_vars, def, fp, ivmt, ivdts, ivgts, alpha_names, gamma_names);
+result <- mdcev_nooutgood(Data, arg_inds, arg_vars, def, fp, ivmts, ivdts, ivgts, alpha_names, gamma_names);
 ########################################################################################################
 sink(output_results_path)
 summary(result); # Show results from the MDCEV model with no outside good
 sink()
 # write.table(result$estimate,file=output_results_path, sep=',')
-
 
