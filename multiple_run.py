@@ -93,13 +93,14 @@ def generate_list_of_estimations(utility_variables, case_config_list, number_of_
 
                 input_file = 'resources/2012/IVS_2012_MDCEV_ALL_PROCESSED.csv'
                 output_file = RESULT_PATH + '/result' + '~{}'.format(case_config) + '~{}'.format(variable_in_names) + '.txt'
+                print(output_file)
                 list_of_estimations.append((case_config, input_file, output_file, get_utility_parameters_list(combination)))
 
     return list_of_estimations
 
 
 def run_estimation_with_multiprocessing(list_of_estimations):
-    number_of_processes = 1
+    number_of_processes = 2
     pool = Pool(processes=number_of_processes)
     if len(list_of_estimations) < number_of_processes:
         random_sample = list_of_estimations
@@ -141,7 +142,7 @@ if __name__ == '__main__':
     # Get the utilituy variables
     utility_variables = get_utility_parameters_list(get_utility_variables(UTILITY_VARIABLES_ALTERNATIVES))
 
-    for i in range(12, len(utility_variables)):
+    for i in range(15):
 
         # Generate list of estimations
         list_of_estimations = generate_list_of_estimations(
@@ -154,7 +155,7 @@ if __name__ == '__main__':
         # Run estimation with multiprocessing
         run_estimation_with_multiprocessing(list_of_estimations=list_of_estimations)
 
-        non_converge_list, is_converge = update_non_converge_list('../Data/results/ivs', non_converge_list)
+        non_converge_list, is_converge = update_non_converge_list('resources/Results', non_converge_list)
 
     # print(len(local_variable))
 
