@@ -436,7 +436,7 @@ def read_file_by_city(filename, compulsory_fields, city_lists, city_codes, utili
     :param number_of_data: maximum number going to read, if not given, would be 1 million.
     :return: results as list
     """
-    print utility_parameters
+    print(utility_parameters)
     results = list()
     output_field_list = compulsory_fields + city_lists + utility_parameters
     input_field_list = None
@@ -620,7 +620,6 @@ def get_utility_parameters_list(utility_parameters):
             utility_parameters_list += variable_list
         else:
             utility_parameters_list.append(variable)
-
     return utility_parameters_list
 
 
@@ -753,7 +752,7 @@ def trim_data(input_file, output_file, compulsory_fields, city_lists, city_codes
     :param number_of_data: maximum number of data going to be read, if not givem the default value is 2000
     :return: Boolean value
     """
-    print utility_parameters
+    print(utility_parameters)
     # initials
     data = list()
     input_field_list = None

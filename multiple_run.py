@@ -100,7 +100,7 @@ def generate_list_of_estimations(utility_variables, case_config_list, number_of_
 
 
 def run_estimation_with_multiprocessing(list_of_estimations):
-    number_of_processes = 2
+    number_of_processes = 1
     pool = Pool(processes=number_of_processes)
     if len(list_of_estimations) < number_of_processes:
         random_sample = list_of_estimations
@@ -142,7 +142,7 @@ if __name__ == '__main__':
     # Get the utilituy variables
     utility_variables = get_utility_parameters_list(get_utility_variables(UTILITY_VARIABLES_ALTERNATIVES))
 
-    for i in range(15):
+    for i in range(1, 15):
 
         # Generate list of estimations
         list_of_estimations = generate_list_of_estimations(
