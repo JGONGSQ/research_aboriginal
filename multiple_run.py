@@ -100,7 +100,7 @@ def generate_list_of_estimations(utility_variables, case_config_list, number_of_
 
 
 def run_estimation_with_multiprocessing(list_of_estimations):
-    number_of_processes = 1
+    number_of_processes = 2
     pool = Pool(processes=number_of_processes)
     if len(list_of_estimations) < number_of_processes:
         random_sample = list_of_estimations
