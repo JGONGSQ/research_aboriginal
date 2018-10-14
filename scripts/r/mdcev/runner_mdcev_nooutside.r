@@ -104,8 +104,8 @@ for (i in 1:nc){
     ivmt[[i]] <- c("uno", alternative_variables[[i]]);
   }
 }
-print("This is the ivmt")
-print(ivmt)
+# print("This is the ivmt")
+# print(ivmt)
 
 # In the following specification, ivdts[[1]], ivdts[[2]], ivdts[[3]] contain input data specifications (on right hand side) for satiation parameters (Alphas) 
 # for alternatives 1, 2, and 3;
