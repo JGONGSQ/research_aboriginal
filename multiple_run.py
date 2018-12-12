@@ -65,6 +65,14 @@ def cal_estimation(case_config, input_file, results_file, utility_parameter):
     return process
 
 
+def random_combination(iterable, r):
+    "Random selection from itertools.combinations(iterable, r)"
+    pool = tuple(iterable)
+    n = len(pool)
+    indices = sorted(random.sample(range(n), r))
+    return tuple(pool[i] for i in indices)
+
+
 def generate_list_of_estimations(utility_variables, case_config_list, number_of_variables, non_converge_list):
 
     list_of_estimations = list()
@@ -72,7 +80,10 @@ def generate_list_of_estimations(utility_variables, case_config_list, number_of_
     for case_config in case_config_list:
 
         # generate the combination of lists
-        variable_combinations = itertools.combinations(utility_variables, number_of_variables)
+        # variable_combinations = itertools.combinations(utility_variables, number_of_variables)
+        variable_combinations = list()
+        for i in range(6):
+            variable_combinations.append(random_combination(utility_variables, number_of_variables))
 
         for local_combination in variable_combinations:
             combination = convert_tuple_to_list(local_combination)
@@ -142,7 +153,7 @@ if __name__ == '__main__':
     # Get the utilituy variables
     utility_variables = get_utility_parameters_list(get_utility_variables(UTILITY_VARIABLES_ALTERNATIVES))
 
-    for i in range(1, 15):
+    for i in range(14, 30):
 
         # Generate list of estimations
         list_of_estimations = generate_list_of_estimations(
@@ -156,8 +167,6 @@ if __name__ == '__main__':
         run_estimation_with_multiprocessing(list_of_estimations=list_of_estimations)
 
         non_converge_list, is_converge = update_non_converge_list('resources/Results', non_converge_list)
-
-    # print(len(local_variable))
 
 
     # End of timing
