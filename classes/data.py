@@ -355,6 +355,34 @@ class DataProcessor(object):
         self.write_csv(output_filepath, output_data)
         return
 
+    def modify_the_data_binary_logit(self, input_filepath, output_filepath):
+        """
+            modify the data for binary logit model
+        :param input_filepath: the name of input file with its path
+        :param output_filepath: the name of output file with its path
+        :return: None
+        """
+        output_data = list()
+        title_list = None
+
+        extra_parameters = ['PARTICIPATE_IND']
+
+        data = self.read_csv(input_filepath)
+        for i, row in enumerate(data):
+            # print(i, line)
+            if i == 0:
+                # get the header
+                title_list = row + extra_parameters
+                output_data.append(title_list)
+            else:
+                # get and update the content
+                row = self.update_row(title_list, row)
+                indigenous_activity_choice = self.get_the_activity_choice(title_list, row)
+                output_data.append(row + indigenous_activity_choice)
+
+        self.write_csv(output_filepath, output_data)
+        return
+
     def modify_the_data_mdcev(self,
                               input_filepath, output_filepath, utility_parameters,
                               alternatives_code=DESTINATION_ALTERNATIVES_CODES,

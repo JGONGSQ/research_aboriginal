@@ -2,7 +2,7 @@ import sys
 from datetime import datetime
 sys.path.append('..')
 
-from settings import DEFAULT_DATA_FILE_CSV, ALL_PROCESSED_DATA_FILE_CSV
+from settings import DEFAULT_DATA_FILE_CSV, ALL_PROCESSED_DATA_FILE_CSV, LOGIT_PROCESSED_DATA_FILE_CSV
 from classes.data import DataProcessor
 
 if __name__ == '__main__':
@@ -23,5 +23,9 @@ if __name__ == '__main__':
     if arg == 'default':
         print("processing filtered data")
         data_processor.modify_the_data()
+
+    if arg == 'logit':
+        print("processing data for binary logit model")
+        data_processor.modify_the_data_binary_logit(DEFAULT_DATA_FILE_CSV, LOGIT_PROCESSED_DATA_FILE_CSV)
 
     print(datetime.now() - start_time)
