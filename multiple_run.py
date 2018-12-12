@@ -25,7 +25,7 @@ local_variable = [
     'TRIP_PURPOSE_HOLIDAY', 'TRIP_PURPOSE_VISITING_FR', 'TRIP_PURPOSE_BUSINESS', 'TRIP_PURPOSE_EMPLOYMENT', 'TRIP_PURPOSE_EDUCATION', 'TRIP_PURPOSE_OTHER',
     'CUSTOMS_ENTRY_NSW', 'CUSTOMS_ENTRY_VIC', 'CUSTOMS_ENTRY_QLD', 'CUSTOMS_ENTRY_SA', 'CUSTOMS_ENTRY_NT', 'CUSTOMS_ENTRY_OTHER',
     'COUNTRY_USA', 'COUNTRY_NEW_ZEALAND', 'COUNTRY_ENGLAND', 'COUNTRY_CHINA','COUNTRY_JAPAN', 'COUNTRY_GERMANY', 'COUNTRY_CANADA', 'COUNTRY_FRANCE', 'COUNTRY_OTHER']
-
+# local_variable = ['GENDER_MALE']
 
 UTILITY_VARIABLES_ALTERNATIVES = [
     # Alternative 2
@@ -103,15 +103,15 @@ def generate_list_of_estimations(utility_variables, case_config_list, number_of_
                 variable_in_names += str(datetime.now()).replace(' ', '*')
 
                 input_file = 'resources/2012/IVS_2012_MDCEV_ALL_PROCESSED.csv'
-                output_file = RESULT_PATH + '/result' + '~{}'.format(case_config) + '~{}'.format(variable_in_names) + '.txt'
-                print(output_file)
+                output_file = RESULT_PATH + '/result' + '~{0}'.format(case_config) + '~{0}'.format(variable_in_names) + '.txt'
+                print("This is the out put file", output_file)
                 list_of_estimations.append((case_config, input_file, output_file, get_utility_parameters_list(combination)))
 
     return list_of_estimations
 
 
 def run_estimation_with_multiprocessing(list_of_estimations):
-    number_of_processes = 1
+    number_of_processes = 2
     pool = Pool(processes=number_of_processes)
     if len(list_of_estimations) < number_of_processes:
         random_sample = list_of_estimations
