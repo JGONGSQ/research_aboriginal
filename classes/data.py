@@ -355,7 +355,7 @@ class DataProcessor(object):
         self.write_csv(output_filepath, output_data)
         return
 
-    def modify_the_data_binary_logit(self, input_filepath, output_filepath):
+    def modify_the_data_top_binary_logit(self, input_filepath, output_filepath):
         """
             modify the data for binary logit model
         :param input_filepath: the name of input file with its path
@@ -381,6 +381,46 @@ class DataProcessor(object):
                 output_data.append(row + indigenous_activity_choice)
 
         self.write_csv(output_filepath, output_data)
+        return
+
+    def modify_the_data_bot_binary_logti(self, input_filepath, output_filepath,
+                                         alternatives_code=DESTINATION_ALTERNATIVES_CODES,
+                                         alternatives_list=DESTINATION_ALTERNATIVES_LIST,
+                                         compulsory_fields=COMPULSORY_FIELDS, number_of_data=500):
+        """
+            modify the data for the BOT logit model
+        :param input_filepath:
+        :param output_filepath:
+        :param alternatives_code:
+        :param alternatives_list:
+        :param compulsory_fields:
+        :param number_of_data:
+        :return:
+        """
+        output_data = list()
+        title_list = None
+
+        extra_parameters = ['PARTICIPATE_IND']
+
+        data = self.read_csv(input_filepath)
+        for i, row in enumerate(data):
+            # print(i, line)
+            if i == 0:
+                # get the header
+                title_list = row + extra_parameters + alternatives_list
+                output_data.append(title_list)
+            else:
+                # get the destination data
+                destination_data = self.get_the_destination_data(title_list, row, alternatives_code)
+
+                if all(value is 0 for value in destination_data) is False:
+                    # get and update the content
+                    row = self.update_row(title_list, row)
+                    indigenous_activity_choice = self.get_the_activity_choice(title_list, row)
+                    output_data.append(row + indigenous_activity_choice + destination_data)
+
+        self.write_csv(output_filepath, output_data)
+
         return
 
     def modify_the_data_mdcev(self,
@@ -438,6 +478,8 @@ class DataProcessor(object):
         self.write_csv(output_filepath, data=output_data)
 
         return
+
+
 
 
 
